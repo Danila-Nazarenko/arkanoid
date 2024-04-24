@@ -1,31 +1,30 @@
+//connect to canvas
 const CANVAS_NODE = document.getElementById("arkanoid");
 const CTX = CANVAS_NODE.getContext("2d");
 const BALL_RADIUS = 10;
-
 CTX.fillStyle = "#0095DD";
 CTX.font = "16px Arial";
-
+//paddle parameters
 const PADDLE_HEIGHT = 10;
 const PADDLE_WIDTH = 75;
-
+//bricks parameters
 const BRICK_ROW_COUNT = 5;
 const BRICK_COLUMN_COUNT = 3;
 const BRICK_WIDTH = 75;
 const BRICK_HEIGHT = 20;
 const BRICK_PADDING = 10;
 const BRICK_OFFSET = 30;
-
+//positions
 let ballX = CANVAS_NODE.width / 2;
 let ballY = CANVAS_NODE.height - 30;
 let dx = 2;
 let dy = -2;
-
-
+//paddle's position
 let paddleX = (CANVAS_NODE.width - PADDLE_WIDTH) / 2;
-
+//game parameters
 let score = 0;
 let lives = 3;
-
+//creating bricks
 const bricks = [];
 
 for (let c = 0; c < BRICK_COLUMN_COUNT; c++) {
@@ -35,7 +34,7 @@ for (let c = 0; c < BRICK_COLUMN_COUNT; c++) {
     bricks[c][r] = { x: 0, y: 0, status: 1 };
   }
 }
-
+//paddle movement
 document.addEventListener("mousemove", handleMouseMove);
 
 function handleMouseMove(e) {
@@ -45,14 +44,14 @@ function handleMouseMove(e) {
     paddleX = RELATIVE_X - PADDLE_WIDTH / 2;
   }
 }
-
+//drawing ball
 function drawBall() {
   CTX.beginPath();
   CTX.arc(ballX, ballY, BALL_RADIUS, 0, Math.PI * 2);
   CTX.fill();
   CTX.closePath();
 }
-
+//darwing paddle
 function drawPaddle() {
   CTX.beginPath();
   CTX.rect(
@@ -64,7 +63,7 @@ function drawPaddle() {
   CTX.fill();
   CTX.closePath();
 }
-
+//draw bricks
 function drawBricks() {
   for (let c = 0; c < BRICK_COLUMN_COUNT; c++) {
     for (let r = 0; r < BRICK_ROW_COUNT; r++) {
@@ -83,7 +82,7 @@ function drawBricks() {
     }
   }
 }
-
+//calculating score and check lives
 function drawScore() {
   CTX.fillText("Счет: " + score, 8, 20);
 }
@@ -91,7 +90,7 @@ function drawScore() {
 function drawLives() {
   CTX.fillText("Жизней: " + lives, CANVAS_NODE.width - 85, 20);
 }
-
+//checking collision
 function detectCollision() {
   for (let c = 0; c < BRICK_COLUMN_COUNT; c++) {
     for (let r = 0; r < BRICK_ROW_COUNT; r++) {
@@ -119,7 +118,7 @@ function detectCollision() {
     }
   }
 }
-
+//combinating functions in one
 function draw() {
   CTX.clearRect(0, 0, CANVAS_NODE.width, CANVAS_NODE.height);
 
@@ -133,11 +132,9 @@ function draw() {
   if (ballX + dx < BALL_RADIUS || ballX + dx > CANVAS_NODE.width - BALL_RADIUS) {
     dx = -dx;
   }
-
   if (ballY + dy < BALL_RADIUS) {
     dy = -dy;
   }
-
   if (ballY + dy > CANVAS_NODE.height - BALL_RADIUS) {
     if (ballX > paddleX && ballX < paddleX + PADDLE_WIDTH) {
       dy = -dy;
@@ -163,5 +160,5 @@ function draw() {
 
   requestAnimationFrame(draw);
 }
-
+//starting game
 draw();
