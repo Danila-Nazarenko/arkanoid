@@ -15,3 +15,6 @@ Description of controls in the game "Arkanoid":
    - If the ball falls below the bottom edge of the screen, the player loses a life. You have 3 lifes.
 
 The objective of the game "Arkanoid" is to clear the screen of all blocks using the ball and paddle without losing all lives.
+
+
+[CLICK TO TRY](https://danila-nazarenko.github.io/arkanoid/)
